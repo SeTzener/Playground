@@ -41,8 +41,6 @@ namespace MultiThreading
             watch.Stop();
             Utilities.LogElapsedTime(MultiThread.log, "Crea files Multithread", watch.Elapsed);
         }
-
-
         public void CreateRandomText(int idx)
         {
            
@@ -84,7 +82,6 @@ namespace MultiThreading
 
             Utilities.LogElapsedTime(MultiThread.log, "Copia Files in Multithread", watch.Elapsed);
         }
-
         public Thread InitThread(string[] aFile, int i)
         {
             Thread t = new Thread(() => FileCopy(aFile));
@@ -92,7 +89,6 @@ namespace MultiThreading
             t.Start();
             return t;
         }
-        
         private void FileCopy(string[] arr) 
         {
             foreach (string item in arr)
@@ -101,5 +97,49 @@ namespace MultiThreading
             }
         }
 
+        public void FileWrite()
+        {
+            string _allText = Properties.Resources.The_Hunger_Games;
+            File.WriteAllText(Path.Combine(MultiThread.WriteMulti, "Hunger Games.txt"), _allText);
+            string[] book = File.ReadAllLines(Path.Combine(MultiThread.WriteMulti, "Hunger Games.txt"));
+
+            ThreadPool.SetMaxThreads(2, 2);
+            for (int i = 0; i < 50; i++)
+            {
+                ThreadPool.QueueUserWorkItem(new WaitCallback(x => { readAndWrite(book); }));
+            }
+
+            Console.ReadLine();
+        }
+        public void readAndWrite(string[] book)
+        {
+            lock (obj)
+            {
+                for (int i = 0; i < 200; i++)
+                {
+                    string _sFinalTxt = GenerateRandomLine(book);
+                    if (!File.Exists(Path.Combine(MultiThread.WriteMulti, "Hngrgm Ueae.txt")))
+                    {
+                        File.AppendAllText(Path.Combine(MultiThread.WriteMulti, "Hngrgm Ueae.txt"), _sFinalTxt);
+                    }
+                    else
+                    {
+                        while (String.IsNullOrEmpty(_sFinalTxt) )
+                        {
+                            _sFinalTxt = GenerateRandomLine(book);
+                        }
+                        File.AppendAllText(Path.Combine(MultiThread.WriteMulti, "Hngrgm Ueae.txt"), _sFinalTxt);
+                    }
+                }
+            }
+        }
+        private string GenerateRandomLine(string[] paragraph)
+        {
+            Random rdm = new Random();
+            int _iLine = rdm.Next(0, paragraph.Length);
+            int _iSubText = rdm.Next(0, paragraph[_iLine].Length);
+
+            return paragraph[_iLine].Substring(0, _iSubText) + Environment.NewLine;
+        }
     }
 }

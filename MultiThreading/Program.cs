@@ -23,9 +23,10 @@ namespace MultiThreading
             Multi m = new Multi();
 
             //s.CreateFiles();
-            m.CreateFilesMultiThread();
+            //m.CreateFilesMultiThread();
             //s.MoveFiles();
             //m.MoveFilesToFolderMulti();
+            m.FileWrite();
         }
     }
 }

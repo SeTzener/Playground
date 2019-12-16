@@ -33,6 +33,7 @@ namespace Common
     {
         public static string Input { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Playground", "MultiThread", "Standard", "Input"); } }
         public static string InputMulti { get {return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Playground", "MultiThread", "MultiThread", "Input"); } }
+        public static string WriteMulti { get {return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Playground", "MultiThread", "MultiThread", "Write test"); } }
         public static string Output { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Playground", "MultiThread", "Standard", "Output"); } }
         public static string OutputMulti { get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Playground", "MultiThread", "MultiThread", "Output"); } }
         public static string log { get { Logs l = new Logs(); return l.BasePath; } }
@@ -40,7 +41,7 @@ namespace Common
         { 
             get
             {
-                return new string[] { Input, InputMulti, Output, OutputMulti, log };
+                return new string[] { Input, InputMulti, Output, OutputMulti, log, WriteMulti };
             }
         }
     }
